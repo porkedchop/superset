@@ -24,6 +24,14 @@ assists people when migrating to a new version.
 
 ## Next
 
+- `NOT IN` filters on SQLAlchemy-backed datasets now also return rows where the
+  column is NULL. Previously these rows were dropped by SQL three-valued logic
+  (`NULL NOT IN (...)` is not true), so a filter such as "Exclude selected values"
+  removed NULL rows in addition to the selected values. Dashboards, charts and
+  reports that use `NOT IN` may therefore show additional NULL rows. A `NOT IN`
+  list that explicitly contains NULL still excludes NULL rows. `!=`, `NOT LIKE`
+  and `NOT ILIKE` are unchanged.
+
 - **Semantic NULL filters and provider SDK upgrade.** Semantic filters normalize
   UI NULL/empty-string selections. Mixed positive NULL membership uses `OrFilter`,
   which every semantic provider must render; previously NULL rows could be
